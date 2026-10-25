@@ -1,11 +1,244 @@
 ---
-import Welcome from '../components/Welcome.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
 import Layout from '../layouts/Layout.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const vocabulary = [
+  { german: 'Guten Morgen', indonesian: 'Selamat pagi' },
+  { german: 'Danke', indonesian: 'Terima kasih' },
+  { german: 'Bitte', indonesian: 'Tolong / Silakan' },
+  { german: 'Freundschaft', indonesian: 'Persahabatan' },
+  { german: 'Lernen', indonesian: 'Belajar' },
+  { german: 'Zusammen', indonesian: 'Bersama' },
+  { german: 'Wissen', indonesian: 'Pengetahuan' },
+  { german: 'Willkommen', indonesian: 'Selamat datang' },
+  { german: 'Sprache', indonesian: 'Bahasa' },
+  { german: 'Zukunft', indonesian: 'Masa depan' },
+  { german: 'Hallo', indonesian: 'Halo' },
+  { german: 'Stadt', indonesian: 'Kota' },
+];
+
+const levels = [
+  {
+    code: 'A1',
+    title: 'Pemula',
+    description: 'Membangun fondasi percakapan dasar, kosakata harian, dan rasa percaya diri untuk berkomunikasi sederhana.',
+    href: 'https://wa.me/6281234567890?text=' + encodeURIComponent('Halo, saya ingin daftar kelas A1 — Pemula.'),
+  },
+  {
+    code: 'A2',
+    title: 'Dasar',
+    description: 'Mengembangkan kemampuan memahami situasi sehari-hari, menjelaskan kegiatan rutin, dan mengekspresikan kebutuhan dengan lebih jelas.',
+    href: 'https://wa.me/6281234567890?text=' + encodeURIComponent('Halo, saya ingin daftar kelas A2 — Dasar.'),
+  },
+  {
+    code: 'B1',
+    title: 'Menengah',
+    description: 'Memperkuat kemampuan berkomunikasi dalam konteks kerja, studi, dan interaksi sosial yang lebih dinamis.',
+    href: 'https://wa.me/6281234567890?text=' + encodeURIComponent('Halo, saya ingin daftar kelas B1 — Menengah.'),
+  },
+  {
+    code: 'B2',
+    title: 'Menengah Atas',
+    description: 'Menyempurnakan presentasi, pemahaman tekstual, dan ketepatan ekspresi untuk menghadapi situasi yang lebih kompleks.',
+    href: 'https://wa.me/6281234567890?text=' + encodeURIComponent('Halo, saya ingin daftar kelas B2 — Menengah Atas.'),
+  },
+];
+
+const teachers = [
+  { initial: 'P1', name: 'Pengajar Placeholder 1', role: 'Kelas A1 & A2' },
+  { initial: 'P2', name: 'Pengajar Placeholder 2', role: 'Kelas B1' },
+  { initial: 'P3', name: 'Pengajar Placeholder 3', role: 'Kelas B2 & Persiapan' },
+];
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="This Deutsch Academy | Kursus Bahasa Jerman" description="This Deutsch Academy adalah tempat belajar bahasa Jerman untuk level A1 hingga B2 dengan pendekatan yang terjangkau, terstruktur, dan mudah diakses.">
+  <Header />
+
+  <main>
+    <section id="home" class="container py-12 md:py-20">
+      <div class="hero-grid md:grid-cols-[1.1fr_0.9fr]">
+        <div class="space-y-6">
+          <p class="section-label">German learning · A1–B2</p>
+          <h1 class="serif-display max-w-xl text-5xl leading-[0.95] text-[var(--color-charcoal)] md:text-7xl">
+            Deutsch lernen. Neue Wege entdecken.
+          </h1>
+          <p class="max-w-xl text-lg leading-relaxed text-[var(--color-muted)]">
+            Kursus bahasa Jerman yang terjangkau, terstruktur, dan siap membimbing Anda dari dasar hingga level menengah atas.
+          </p>
+
+          <div class="flex flex-wrap items-center gap-3 pt-2">
+            <a href="#levels" class="inline-flex items-center border border-[var(--color-red)] bg-[var(--color-red)] px-5 py-3 text-[0.7rem] font-medium uppercase tracking-[0.15em] text-[var(--color-white)] transition-colors hover:border-[var(--color-charcoal)] hover:bg-[var(--color-charcoal)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-gold)]">
+              Jelajahi Level
+            </a>
+            <a href="https://wa.me/6281234567890?text=Halo%2C%20saya%20ingin%20konsultasi%20kursus%20bahasa%20Jerman." target="_blank" rel="noreferrer" class="inline-flex items-center border border-[var(--color-border)] bg-transparent px-5 py-3 text-[0.7rem] font-medium uppercase tracking-[0.15em] text-[var(--color-charcoal)] transition-colors hover:border-[var(--color-red)] hover:text-[var(--color-red)]">
+              Hubungi WhatsApp
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-frame">
+          <div class="hero-figure">
+            <div class="absolute left-6 top-6 z-10 max-w-[210px] space-y-2 border border-[var(--color-border)] bg-[var(--color-paper)]/90 p-4">
+              <p class="section-label mb-0">Kursus</p>
+              <p class="serif-display text-3xl leading-none text-[var(--color-charcoal)]">A1–B2</p>
+            </div>
+            <div class="hero-mark">This Deutsch</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section aria-label="Daftar kosakata Jerman" class="vocabulary-strip">
+      <div class="vocabulary-viewport" aria-label="Vokabular bahasa Jerman bergerak">
+        <div class="vocabulary-track">
+          <div class="vocabulary-group">
+            {vocabulary.map((item) => (
+              <span class="vocabulary-item">
+                <span class="vocabulary-word">{item.german}</span>
+                <span class="vocabulary-separator">—</span>
+                <span class="vocabulary-translation">{item.indonesian}</span>
+              </span>
+            ))}
+          </div>
+          <div class="vocabulary-group" aria-hidden="true">
+            {vocabulary.map((item) => (
+              <span class="vocabulary-item">
+                <span class="vocabulary-word">{item.german}</span>
+                <span class="vocabulary-separator">—</span>
+                <span class="vocabulary-translation">{item.indonesian}</span>
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="levels" class="container py-16 md:py-20">
+      <div class="mb-8 max-w-2xl">
+        <p class="section-label">Level kursus</p>
+        <h2 class="serif-display text-4xl text-[var(--color-charcoal)] md:text-5xl">Jalur belajar yang jelas.</h2>
+      </div>
+
+      <div class="grid gap-4 md:grid-cols-2">
+        {levels.map((level) => (
+          <article class="level-card">
+            <div class="mb-4 flex items-start justify-between gap-3">
+              <div>
+                <p class="section-label mb-2">Level {level.code}</p>
+                <h3 class="serif-display text-3xl text-[var(--color-charcoal)]">{level.title}</h3>
+              </div>
+              <span class="inline-flex h-12 w-12 items-center justify-center border border-[var(--color-gold)] bg-[var(--color-gold)] text-sm font-semibold uppercase tracking-[0.12em] text-[var(--color-charcoal)]">
+                {level.code}
+              </span>
+            </div>
+
+            <p class="mb-6 text-base leading-relaxed text-[var(--color-muted)]">{level.description}</p>
+
+            <a href={level.href} target="_blank" rel="noreferrer" class="inline-flex items-center border-b border-[var(--color-charcoal)] pb-1 text-[0.7rem] font-medium uppercase tracking-[0.12em] text-[var(--color-charcoal)] transition-colors hover:border-[var(--color-red)] hover:text-[var(--color-red)]">
+              Daftar {level.code}
+            </a>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section id="teachers" class="border-y border-[var(--color-border)] bg-[var(--color-ivory)]">
+      <div class="container py-16 md:py-20">
+        <div class="mb-8 max-w-2xl">
+          <p class="section-label">Pengajar</p>
+          <h2 class="serif-display text-4xl text-[var(--color-charcoal)] md:text-5xl">Mendampingi perjalanan belajar.</h2>
+        </div>
+
+        <div class="grid gap-5 md:grid-cols-3">
+          {teachers.map((teacher) => (
+            <article class="teacher-card p-5">
+              <div class="mb-5 flex items-center gap-4">
+                <div class="teacher-avatar" aria-hidden="true">{teacher.initial}</div>
+                <div>
+                  <p class="section-label mb-1">placeholder</p>
+                  <h3 class="text-lg font-semibold text-[var(--color-charcoal)]">{teacher.name}</h3>
+                </div>
+              </div>
+
+              <p class="text-sm uppercase tracking-[0.12em] text-[var(--color-muted)]">{teacher.role}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="container py-16 md:py-20">
+      <div class="grid gap-8 md:grid-cols-[1fr_0.95fr] md:items-start">
+        <div>
+          <p class="section-label">Tentang kami</p>
+          <h2 class="serif-display mb-5 text-4xl text-[var(--color-charcoal)] md:text-5xl">Kursus bahasa Jerman yang terjangkau dan terarah.</h2>
+
+          <div class="space-y-4 text-base leading-relaxed text-[var(--color-muted)]">
+            <p>
+              This Deutsch Academy hadir untuk membantu Anda belajar bahasa Jerman dengan cara yang lebih terstruktur, sederhana, dan mudah diakses.
+            </p>
+            <p>
+              Kami menyediakan jalur pembelajaran dari level A1 hingga B2, dengan fokus pada keterampilan komunikasi, pemahaman materi, dan persiapan kebutuhan studi, kerja, serta kehidupan sehari-hari.
+            </p>
+            <p>
+              Konsultasi awal bisa dilakukan dengan cepat melalui WhatsApp agar Anda dapat memilih level yang paling sesuai dengan tujuan belajar Anda.
+            </p>
+          </div>
+        </div>
+
+        <aside class="about-quote p-6 text-base leading-relaxed text-[var(--color-charcoal)]">
+          “Belajar bahasa bukan hanya tentang tata bahasa, tetapi tentang membuka peluang baru menuju dunia kerja, studi, dan komunikasi yang lebih luas.”
+        </aside>
+      </div>
+    </section>
+
+    <section id="seminar" class="border-y border-[var(--color-border)] bg-[var(--color-paper)]">
+      <div class="container py-16 md:py-20">
+        <div class="seminar-card grid gap-8 p-6 md:grid-cols-[1fr_0.9fr] md:p-10">
+          <div>
+            <p class="section-label">Seminar</p>
+            <h2 class="serif-display mb-4 text-4xl text-[var(--color-charcoal)] md:text-5xl">Seminar bahasa Jerman untuk Anda yang ingin mulai dari langkah yang tepat.</h2>
+            <p class="max-w-xl text-base leading-relaxed text-[var(--color-muted)]">
+              Ikuti sesi konsultasi dan pemaparan singkat mengenai cara belajar yang efektif, pilihan level yang sesuai, serta strategi persiapan untuk kebutuhan studi dan pekerjaan.
+            </p>
+          </div>
+
+          <div class="flex flex-col justify-center gap-4 border border-[var(--color-border)] bg-[var(--color-paper)] p-5">
+            <p class="section-label mb-0">Informasi</p>
+            <p class="text-sm uppercase tracking-[0.12em] text-[var(--color-muted)]">Open consultation</p>
+            <a href="https://wa.me/6281234567890?text=Halo%2C%20saya%20ingin%20mendaftar%20seminar%20bahasa%20Jerman." target="_blank" rel="noreferrer" class="inline-flex items-center justify-center border border-[var(--color-red)] bg-[var(--color-red)] px-4 py-3 text-[0.7rem] font-medium uppercase tracking-[0.12em] text-[var(--color-white)] transition-colors hover:border-[var(--color-charcoal)] hover:bg-[var(--color-charcoal)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-gold)]">
+              Daftar via WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+
+  <script>
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('main section[id]');
+
+    const setActiveLink = (id: string) => {
+      navLinks.forEach((link) => {
+        const isActive = link.getAttribute('href') === `#${id}`;
+        link.classList.toggle('is-active', isActive);
+      });
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        if (visible.length > 0) {
+          setActiveLink(visible[0].target.id);
+        }
+      },
+      { rootMargin: '-35% 0px -40% 0px', threshold: [0.2, 0.4, 0.6] }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+  </script>
 </Layout>
