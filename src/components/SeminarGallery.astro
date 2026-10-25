@@ -1,0 +1,521 @@
+---
+import learningSession from "../assets/seminar/learning-session.jpg";
+import studyGroup from "../assets/seminar/study-group.jpg";
+import speakerSession from "../assets/seminar/speaker-session.jpg";
+import groupDiscussion from "../assets/seminar/group-discussion.jpg";
+
+const slides = [
+  {
+    image: learningSession,
+    alt: "Peserta menyimak presentasi di dalam ruang seminar",
+    caption: "Sesi pembelajaran",
+  },
+  {
+    image: studyGroup,
+    alt: "Sekelompok peserta belajar dan berdiskusi bersama",
+    caption: "Belajar bersama",
+  },
+  {
+    image: speakerSession,
+    alt: "Peserta berkolaborasi menggunakan laptop selama sesi belajar",
+    caption: "Diskusi materi",
+  },
+  {
+    image: groupDiscussion,
+    alt: "Kelompok kecil berdiskusi di sekitar laptop",
+    caption: "Kolaborasi kelompok",
+  },
+];
+
+const trackSlideCount = slides.length + 2;
+---
+
+<div class="seminar-gallery" data-seminar-carousel role="region" aria-roledescription="carousel" aria-label="Galeri foto ilustrasi seminar" tabindex="0">
+  <div class="seminar-gallery-heading">
+    <div>
+      <p class="section-label">Galeri seminar</p>
+      <h3 class="serif-display">Ruang untuk bertukar gagasan.</h3>
+    </div>
+    <p class="seminar-gallery-note">Foto ilustrasi, bukan dokumentasi kegiatan This Deutsch Academy.</p>
+  </div>
+
+  <div class="seminar-carousel-frame">
+    <div class="seminar-carousel-viewport" data-carousel-viewport>
+      <div
+        class="seminar-carousel-track"
+        data-carousel-track
+        style={`--slide-count: ${trackSlideCount};`}
+      >
+        <figure class="seminar-carousel-slide" aria-hidden="true" inert>
+          <img
+            src={slides[slides.length - 1].image.src}
+            alt=""
+            width={slides[slides.length - 1].image.width}
+            height={slides[slides.length - 1].image.height}
+            draggable="false"
+            loading="eager"
+            decoding="async"
+          />
+        </figure>
+
+        {
+          slides.map((slide, index) => (
+            <figure
+              class="seminar-carousel-slide"
+              data-carousel-slide
+              data-slide-index={index}
+              role="group"
+              aria-roledescription="slide"
+              aria-label={`${index + 1} dari ${slides.length}`}
+              aria-hidden={index === 0 ? "false" : "true"}
+              inert={index === 0 ? undefined : true}
+            >
+              <img
+                src={slide.image.src}
+                alt={slide.alt}
+                width={slide.image.width}
+                height={slide.image.height}
+                draggable="false"
+                loading="eager"
+                decoding="async"
+              />
+              <figcaption>{slide.caption}</figcaption>
+            </figure>
+          ))
+        }
+
+        <figure class="seminar-carousel-slide" aria-hidden="true" inert>
+          <img
+            src={slides[0].image.src}
+            alt=""
+            width={slides[0].image.width}
+            height={slides[0].image.height}
+            draggable="false"
+            loading="eager"
+            decoding="async"
+          />
+        </figure>
+      </div>
+    </div>
+
+    <div class="seminar-carousel-controls">
+      <button
+        class="seminar-carousel-arrow"
+        type="button"
+        data-carousel-previous
+        aria-label="Foto seminar sebelumnya"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M15 18 9 12l6-6" />
+        </svg>
+      </button>
+
+      <div class="seminar-carousel-status">
+        <span data-carousel-count aria-live="polite">01 / 04</span>
+        <div class="seminar-carousel-indicators" aria-label="Pilih foto seminar">
+          {
+            slides.map((slide, index) => (
+              <button
+                class="seminar-carousel-indicator"
+                type="button"
+                data-carousel-indicator
+                data-slide-index={index}
+                aria-label={`Tampilkan foto ${index + 1}: ${slide.caption}`}
+                aria-current={index === 0 ? "true" : undefined}
+                disabled={index === 0}
+              />
+            ))
+          }
+        </div>
+      </div>
+
+      <button
+        class="seminar-carousel-arrow"
+        type="button"
+        data-carousel-next
+        aria-label="Foto seminar berikutnya"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="m9 18 6-6-6-6" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const carousel = document.querySelector<HTMLElement>("[data-seminar-carousel]");
+
+  if (carousel) {
+    const viewport = carousel.querySelector<HTMLElement>("[data-carousel-viewport]");
+    const track = carousel.querySelector<HTMLElement>("[data-carousel-track]");
+    const slides = Array.from(
+      carousel.querySelectorAll<HTMLElement>("[data-carousel-slide]"),
+    );
+    const previousButton =
+      carousel.querySelector<HTMLButtonElement>("[data-carousel-previous]");
+    const nextButton =
+      carousel.querySelector<HTMLButtonElement>("[data-carousel-next]");
+    const indicators = Array.from(
+      carousel.querySelectorAll<HTMLButtonElement>("[data-carousel-indicator]"),
+    );
+    const count = carousel.querySelector<HTMLElement>("[data-carousel-count]");
+
+    if (
+      viewport &&
+      track &&
+      slides.length === 4 &&
+      previousButton &&
+      nextButton &&
+      count
+    ) {
+      const slideCount = slides.length;
+      const firstClonePosition = 0;
+      const lastClonePosition = slideCount + 1;
+      let activeIndex = 0;
+      let trackPosition = 1;
+      let isTransitioning = false;
+      let pointerStart: { x: number; y: number } | null = null;
+      let transitionFallback: number | undefined;
+
+      const setTrackPosition = (position: number): void => {
+        track.style.transform = `translateX(calc(-100% / ${slideCount + 2} * ${position}))`;
+      };
+
+      const updateActiveSlide = (index: number): void => {
+        activeIndex = (index + slideCount) % slideCount;
+        slides.forEach((slide, slideIndex) => {
+          const isActive = slideIndex === activeIndex;
+          slide.setAttribute("aria-hidden", String(!isActive));
+          slide.inert = !isActive;
+        });
+
+        indicators.forEach((indicator, indicatorIndex) => {
+          const isActive = indicatorIndex === activeIndex;
+          if (isActive) {
+            indicator.setAttribute("aria-current", "true");
+          } else {
+            indicator.removeAttribute("aria-current");
+          }
+          indicator.disabled = isActive;
+        });
+
+        count.textContent = `${String(activeIndex + 1).padStart(2, "0")} / ${String(slideCount).padStart(2, "0")}`;
+      };
+
+      const finishTransition = (): void => {
+        if (!isTransitioning) return;
+        if (transitionFallback !== undefined) {
+          window.clearTimeout(transitionFallback);
+          transitionFallback = undefined;
+        }
+        track.removeEventListener("transitionend", onTransitionEnd);
+
+        if (trackPosition === firstClonePosition) {
+          trackPosition = slideCount;
+          track.classList.add("is-jumping");
+          setTrackPosition(trackPosition);
+          track.getBoundingClientRect();
+          track.classList.remove("is-jumping");
+        } else if (trackPosition === lastClonePosition) {
+          trackPosition = 1;
+          track.classList.add("is-jumping");
+          setTrackPosition(trackPosition);
+          track.getBoundingClientRect();
+          track.classList.remove("is-jumping");
+        }
+
+        isTransitioning = false;
+        indicators.forEach((indicator, index) => {
+          indicator.disabled = index === activeIndex;
+        });
+      };
+
+      const onTransitionEnd = (event: TransitionEvent): void => {
+        if (event.target === track && event.propertyName === "transform") {
+          finishTransition();
+        }
+      };
+
+      const moveTo = (index: number): void => {
+        if (isTransitioning || index === activeIndex) return;
+
+        const direction = index > activeIndex ? 1 : index < activeIndex ? -1 : 0;
+        let step = direction;
+        if (activeIndex === slideCount - 1 && index === 0) step = 1;
+        if (activeIndex === 0 && index === slideCount - 1) step = -1;
+
+        isTransitioning = true;
+
+        trackPosition += step;
+        updateActiveSlide(index);
+        setTrackPosition(trackPosition);
+        track.addEventListener("transitionend", onTransitionEnd);
+        transitionFallback = window.setTimeout(finishTransition, 700);
+      };
+
+      const moveBy = (step: number): void => {
+        moveTo((activeIndex + step + slideCount) % slideCount);
+      };
+
+      previousButton.addEventListener("click", () => moveBy(-1));
+      nextButton.addEventListener("click", () => moveBy(1));
+
+      indicators.forEach((indicator) => {
+        indicator.addEventListener("click", () => {
+          const targetIndex = Number(indicator.dataset.slideIndex);
+          if (Number.isInteger(targetIndex)) moveTo(targetIndex);
+        });
+      });
+
+      carousel.addEventListener("keydown", (event: KeyboardEvent) => {
+        if (event.key === "ArrowLeft") {
+          event.preventDefault();
+          moveBy(-1);
+        } else if (event.key === "ArrowRight") {
+          event.preventDefault();
+          moveBy(1);
+        }
+      });
+
+      viewport.addEventListener("pointerdown", (event: PointerEvent) => {
+        if (event.pointerType === "mouse" && event.button !== 0) return;
+        pointerStart = { x: event.clientX, y: event.clientY };
+      });
+
+      viewport.addEventListener("pointerup", (event: PointerEvent) => {
+        if (pointerStart === null) return;
+        const distanceX = event.clientX - pointerStart.x;
+        const distanceY = event.clientY - pointerStart.y;
+        pointerStart = null;
+        if (
+          Math.abs(distanceX) < 48 ||
+          Math.abs(distanceX) < Math.abs(distanceY) * 1.25
+        ) {
+          return;
+        }
+        moveBy(distanceX < 0 ? 1 : -1);
+      });
+
+      viewport.addEventListener("pointercancel", () => {
+        pointerStart = null;
+      });
+
+      updateActiveSlide(activeIndex);
+      setTrackPosition(trackPosition);
+    }
+  }
+</script>
+
+<style>
+  .seminar-gallery {
+    margin-top: clamp(2rem, 5vw, 3.5rem);
+  }
+
+  .seminar-gallery-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .seminar-gallery-heading .section-label {
+    margin-bottom: 0.4rem;
+  }
+
+  .seminar-gallery-heading h3 {
+    margin: 0;
+    color: var(--color-charcoal);
+    font-size: clamp(1.65rem, 3vw, 2.5rem);
+    line-height: 1.1;
+  }
+
+  .seminar-gallery-note {
+    max-width: 18rem;
+    margin: 0;
+    color: var(--color-muted);
+    font-size: 0.72rem;
+    line-height: 1.5;
+    text-align: right;
+  }
+
+  .seminar-carousel-frame {
+    border: 1px solid var(--color-border);
+    padding: clamp(0.55rem, 1.5vw, 1rem);
+    background: var(--color-white);
+  }
+
+  .seminar-carousel-viewport {
+    overflow: hidden;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: var(--color-ivory);
+    touch-action: pan-y;
+    user-select: none;
+  }
+
+  .seminar-carousel-track {
+    display: flex;
+    width: calc(var(--slide-count) * 100%);
+    height: 100%;
+    transform: translateX(calc(-100% / var(--slide-count)));
+    transition: transform 480ms cubic-bezier(0.22, 0.61, 0.36, 1);
+    will-change: transform;
+  }
+
+  .seminar-carousel-track.is-jumping {
+    transition: none;
+  }
+
+  .seminar-carousel-slide {
+    position: relative;
+    flex: 0 0 calc(100% / var(--slide-count));
+    width: calc(100% / var(--slide-count));
+    height: 100%;
+    min-width: 0;
+    margin: 0;
+    overflow: hidden;
+    background: var(--color-ivory);
+  }
+
+  .seminar-carousel-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+  }
+
+  .seminar-carousel-slide figcaption {
+    position: absolute;
+    inset: auto 0 0;
+    padding: 3rem 1.25rem 1rem;
+    color: var(--color-white);
+    background: linear-gradient(transparent, rgb(26 26 26 / 72%));
+    font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+  }
+
+  .seminar-carousel-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-top: 1rem;
+  }
+
+  .seminar-carousel-arrow {
+    display: grid;
+    width: 2.75rem;
+    height: 2.75rem;
+    flex: 0 0 auto;
+    place-items: center;
+    border: 1px solid var(--color-border);
+    background: var(--color-paper);
+    color: var(--color-charcoal);
+    cursor: pointer;
+    transition:
+      color 180ms ease,
+      border-color 180ms ease,
+      background-color 180ms ease;
+  }
+
+  .seminar-carousel-arrow:hover:not(:disabled) {
+    border-color: var(--color-red);
+    background: var(--color-red);
+    color: var(--color-white);
+  }
+
+  .seminar-carousel-arrow:disabled {
+    cursor: wait;
+    opacity: 0.65;
+  }
+
+  .seminar-carousel-arrow svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: square;
+    stroke-width: 1.5;
+  }
+
+  .seminar-carousel-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    color: var(--color-muted);
+    font-size: 0.68rem;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.12em;
+  }
+
+  .seminar-carousel-indicators {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
+  .seminar-carousel-indicator {
+    width: 0.5rem;
+    height: 0.5rem;
+    padding: 0;
+    border: 1px solid var(--color-muted);
+    border-radius: 50%;
+    background: transparent;
+    cursor: pointer;
+    transition:
+      transform 180ms ease,
+      background-color 180ms ease,
+      border-color 180ms ease;
+  }
+
+  .seminar-carousel-indicator[aria-current="true"] {
+    border-color: var(--color-red);
+    background: var(--color-red);
+    transform: scale(1.2);
+    cursor: default;
+  }
+
+  .seminar-carousel-arrow:focus-visible,
+  .seminar-carousel-indicator:focus-visible,
+  .seminar-gallery:focus-visible {
+    outline: 2px solid var(--color-red);
+    outline-offset: 3px;
+  }
+
+  @media (max-width: 640px) {
+    .seminar-gallery-heading {
+      align-items: start;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+
+    .seminar-gallery-note {
+      text-align: left;
+    }
+
+    .seminar-carousel-controls {
+      gap: 0.5rem;
+    }
+
+    .seminar-carousel-arrow {
+      width: 2.5rem;
+      height: 2.5rem;
+    }
+
+    .seminar-carousel-status {
+      gap: 0.65rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .seminar-carousel-track,
+    .seminar-carousel-arrow,
+    .seminar-carousel-indicator {
+      transition-duration: 1ms;
+    }
+  }
+</style>
