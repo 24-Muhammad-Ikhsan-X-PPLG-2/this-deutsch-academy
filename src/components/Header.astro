@@ -1,22 +1,29 @@
 ---
-import logo from '../assets/logo.jpeg';
+import logo from "../assets/logo.jpeg";
 
 const navItems = [
-  { label: 'Beranda', href: '#home' },
-  { label: 'Level', href: '#levels' },
-  { label: 'Pengajar', href: '#teachers' },
-  { label: 'Tentang', href: '#about' },
-  { label: 'Seminar', href: '#seminar' },
-  { label: 'Kontak', href: '#contact' },
+  { label: "Beranda", href: "#home" },
+  { label: "Level", href: "#levels" },
+  { label: "Pengajar", href: "#teachers" },
+  { label: "Tentang", href: "#about" },
+  { label: "Seminar", href: "#seminar" },
+  { label: "Kontak", href: "#contact" },
 ];
 
-const whatsappUrl = 'https://wa.me/6281234567890';
-const headerMessage = 'Halo, saya ingin bertanya mengenai kursus bahasa Jerman di This Deutsch Academy.';
+const whatsappUrl = "https://wa.me/6282211071110";
+const headerMessage =
+  "Halo, saya ingin bertanya mengenai kursus bahasa Jerman di This Deutsch Academy.";
 ---
 
-<header class="site-header border-b border-[var(--color-border)] bg-[var(--color-paper)]/95 backdrop-blur-sm sticky top-0 z-50">
+<header
+  class="site-header border-b border-[var(--color-border)] bg-[var(--color-paper)]/95 backdrop-blur-sm sticky top-0 z-50"
+>
   <div class="container flex items-center justify-between gap-4 py-4">
-    <a href="#home" class="brand inline-flex items-center gap-3 text-[var(--color-charcoal)]" aria-label="This Deutsch Academy home">
+    <a
+      href="#home"
+      class="brand inline-flex items-center gap-3 text-[var(--color-charcoal)]"
+      aria-label="This Deutsch Academy home"
+    >
       <img class="brand-logo" src={logo.src} alt="This Deutsch Academy" />
       <span class="brand-copy flex" aria-hidden="true">
         <span class="brand-name">THIS DEUTSCH</span>
@@ -25,11 +32,16 @@ const headerMessage = 'Halo, saya ingin bertanya mengenai kursus bahasa Jerman d
     </a>
 
     <nav class="hidden items-center gap-6 md:flex" aria-label="Navigasi utama">
-      {navItems.map((item) => (
-        <a class="nav-link text-[0.7rem] font-medium uppercase tracking-[0.15em] text-[var(--color-muted)] transition-colors duration-200" href={item.href}>
-          {item.label}
-        </a>
-      ))}
+      {
+        navItems.map((item) => (
+          <a
+            class="nav-link text-[0.7rem] font-medium uppercase tracking-[0.15em] text-[var(--color-muted)] transition-colors duration-200"
+            href={item.href}
+          >
+            {item.label}
+          </a>
+        ))
+      }
     </nav>
 
     <div class="flex items-center gap-3">
@@ -59,56 +71,72 @@ const headerMessage = 'Halo, saya ingin bertanya mengenai kursus bahasa Jerman d
     </div>
   </div>
 
-  <nav id="mobile-menu" class="mobile-menu container" data-mobile-menu aria-label="Navigasi mobile" aria-hidden="true" inert>
+  <nav
+    id="mobile-menu"
+    class="mobile-menu container"
+    data-mobile-menu
+    aria-label="Navigasi mobile"
+    aria-hidden="true"
+    inert
+  >
     <div class="mobile-menu-inner">
       <ul class="mobile-menu-list">
-        {navItems.map((item) => (
-          <li class="mobile-menu-item">
-            <a class="nav-link mobile-nav-link block text-sm font-medium uppercase tracking-[0.12em] text-[var(--color-charcoal)]" href={item.href}>
-              {item.label}
-            </a>
-          </li>
-        ))}
+        {
+          navItems.map((item) => (
+            <li class="mobile-menu-item">
+              <a
+                class="nav-link mobile-nav-link block text-sm font-medium uppercase tracking-[0.12em] text-[var(--color-charcoal)]"
+                href={item.href}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
       </ul>
     </div>
   </nav>
 </header>
 
 <script>
-  const menuButton = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
-  const mobileMenu = document.querySelector<HTMLElement>('[data-mobile-menu]');
+  const menuButton =
+    document.querySelector<HTMLButtonElement>("[data-menu-toggle]");
+  const mobileMenu = document.querySelector<HTMLElement>("[data-mobile-menu]");
 
   if (menuButton && mobileMenu) {
     let isMenuOpen = false;
 
     const setMenuOpen = (open: boolean): void => {
       isMenuOpen = open;
-      menuButton.setAttribute('aria-expanded', String(open));
-      menuButton.setAttribute('aria-label', open ? 'Tutup menu navigasi' : 'Buka menu navigasi');
-      mobileMenu.classList.toggle('is-open', open);
-      mobileMenu.setAttribute('aria-hidden', String(!open));
+      menuButton.setAttribute("aria-expanded", String(open));
+      menuButton.setAttribute(
+        "aria-label",
+        open ? "Tutup menu navigasi" : "Buka menu navigasi",
+      );
+      mobileMenu.classList.toggle("is-open", open);
+      mobileMenu.setAttribute("aria-hidden", String(!open));
       mobileMenu.inert = !open;
     };
 
-    menuButton.addEventListener('click', () => {
+    menuButton.addEventListener("click", () => {
       setMenuOpen(!isMenuOpen);
     });
 
-    mobileMenu.querySelectorAll<HTMLAnchorElement>('a').forEach((link) => {
-      link.addEventListener('click', () => {
+    mobileMenu.querySelectorAll<HTMLAnchorElement>("a").forEach((link) => {
+      link.addEventListener("click", () => {
         setMenuOpen(false);
       });
     });
 
-    document.addEventListener('keydown', (event: KeyboardEvent) => {
-      if (event.key === 'Escape' && isMenuOpen) {
+    document.addEventListener("keydown", (event: KeyboardEvent) => {
+      if (event.key === "Escape" && isMenuOpen) {
         setMenuOpen(false);
         menuButton.focus();
       }
     });
 
-    const desktopViewport = window.matchMedia('(min-width: 48rem)');
-    desktopViewport.addEventListener('change', (event: MediaQueryListEvent) => {
+    const desktopViewport = window.matchMedia("(min-width: 48rem)");
+    desktopViewport.addEventListener("change", (event: MediaQueryListEvent) => {
       if (event.matches && isMenuOpen) {
         setMenuOpen(false);
       }

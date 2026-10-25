@@ -1,32 +1,52 @@
 ---
-const whatsappNumber = '+62 812 3456 7890';
-const whatsappBase = 'https://wa.me/6281234567890';
-const instagram = 'https://instagram.com/thisdeutschacademy';
-const threads = 'https://threads.net/@thisdeutschacademy';
+const whatsappNumber = "+62 822 1107 1110";
+const whatsappBase = "https://wa.me/6282211071110";
+const instagram = "https://instagram.com/thisdeutschacademy";
+const threads = "https://threads.net/@thisdeutschacademy";
 ---
 
-<footer id="contact" class="border-t border-[var(--color-border)] bg-[var(--color-ivory)]">
+<footer
+  id="contact"
+  class="border-t border-[var(--color-border)] bg-[var(--color-ivory)]"
+>
   <div class="container grid gap-8 py-10 md:grid-cols-[1.5fr_1fr_1fr] md:py-14">
     <div>
       <p class="section-label mb-3">This Deutsch Academy</p>
-      <h2 class="serif-display text-3xl text-[var(--color-charcoal)]">Deutsch lernen. Klarer Weg.</h2>
+      <h2 class="serif-display text-3xl text-[var(--color-charcoal)]">
+        Deutsch lernen. Klarer Weg.
+      </h2>
     </div>
 
     <div>
       <p class="section-label mb-3">Kontak</p>
       <ul class="space-y-2 text-sm text-[var(--color-charcoal)]">
         <li>
-          <a href={`${whatsappBase}?text=${encodeURIComponent('Halo, saya ingin konsultasi kursus bahasa Jerman.')}`} target="_blank" rel="noreferrer" class="inline-flex items-center gap-2 border-b border-[var(--color-border)] pb-1 text-inherit transition-colors hover:text-[var(--color-red)]">
+          <a
+            href={`${whatsappBase}?text=${encodeURIComponent("Halo, saya ingin konsultasi kursus bahasa Jerman.")}`}
+            target="_blank"
+            rel="noreferrer"
+            class="inline-flex items-center gap-2 border-b border-[var(--color-border)] pb-1 text-inherit transition-colors hover:text-[var(--color-red)]"
+          >
             WhatsApp: {whatsappNumber}
           </a>
         </li>
         <li>
-          <a href={instagram} target="_blank" rel="noreferrer" class="inline-flex items-center gap-2 border-b border-[var(--color-border)] pb-1 text-inherit transition-colors hover:text-[var(--color-red)]">
+          <a
+            href={instagram}
+            target="_blank"
+            rel="noreferrer"
+            class="inline-flex items-center gap-2 border-b border-[var(--color-border)] pb-1 text-inherit transition-colors hover:text-[var(--color-red)]"
+          >
             Instagram
           </a>
         </li>
         <li>
-          <a href={threads} target="_blank" rel="noreferrer" class="inline-flex items-center gap-2 border-b border-[var(--color-border)] pb-1 text-inherit transition-colors hover:text-[var(--color-red)]">
+          <a
+            href={threads}
+            target="_blank"
+            rel="noreferrer"
+            class="inline-flex items-center gap-2 border-b border-[var(--color-border)] pb-1 text-inherit transition-colors hover:text-[var(--color-red)]"
+          >
             Threads
           </a>
         </li>
@@ -36,7 +56,8 @@ const threads = 'https://threads.net/@thisdeutschacademy';
     <div>
       <p class="section-label mb-3">Jam Konsultasi</p>
       <p class="max-w-xs text-sm leading-relaxed text-[var(--color-muted)]">
-        Konsultasi mudah melalui WhatsApp untuk memilih level yang sesuai dengan tujuan belajar Anda.
+        Konsultasi mudah melalui WhatsApp untuk memilih level yang sesuai dengan
+        tujuan belajar Anda.
       </p>
     </div>
   </div>
