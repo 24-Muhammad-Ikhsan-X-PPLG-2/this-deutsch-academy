@@ -321,27 +321,34 @@ const teachers = [
 
   <script>
     const navLinks = document.querySelectorAll(".nav-link");
-    const sections = document.querySelectorAll("main section[id]");
+    const sections = Array.from(
+      document.querySelectorAll<HTMLElement>("main section[id]"),
+    );
 
-    const setActiveLink = (id: string) => {
+    const setActiveLink = (id: string): void => {
       navLinks.forEach((link) => {
         const isActive = link.getAttribute("href") === `#${id}`;
         link.classList.toggle("is-active", isActive);
       });
     };
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-        if (visible.length > 0) {
-          setActiveLink(visible[0].target.id);
-        }
-      },
-      { rootMargin: "-35% 0px -40% 0px", threshold: [0.2, 0.4, 0.6] },
-    );
+    let scrollFrame = 0;
+    const updateActiveLink = (): void => {
+      if (scrollFrame !== 0) return;
 
-    sections.forEach((section) => observer.observe(section));
+      scrollFrame = window.requestAnimationFrame(() => {
+        scrollFrame = 0;
+        const activationLine = window.innerHeight * 0.35;
+        const activeSection = sections
+          .filter((section) => section.getBoundingClientRect().top <= activationLine)
+          .at(-1);
+
+        if (activeSection) setActiveLink(activeSection.id);
+      });
+    };
+
+    window.addEventListener("scroll", updateActiveLink, { passive: true });
+    window.addEventListener("resize", updateActiveLink);
+    updateActiveLink();
   </script>
 </Layout>
