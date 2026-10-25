@@ -2,6 +2,7 @@
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import SeminarGallery from "../components/SeminarGallery.astro";
+import TeachingGallery from "../components/TeachingGallery.astro";
 import Layout from "../layouts/Layout.astro";
 
 const vocabulary = [
@@ -289,7 +290,7 @@ const teachers = [
     >
       <div class="container py-16 md:py-20">
         <div
-          class="seminar-card grid gap-8 p-6 md:grid-cols-[1fr_0.9fr] md:p-10"
+          class="seminar-card grid gap-8 p-6 md:p-10 lg:grid-cols-[1fr_0.9fr] lg:items-center lg:gap-10"
         >
           <div>
             <p class="section-label">Seminar</p>
@@ -308,28 +309,12 @@ const teachers = [
             </p>
           </div>
 
-          <div
-            class="flex flex-col justify-center gap-4 border border-[var(--color-border)] bg-[var(--color-paper)] p-5"
-          >
-            <p class="section-label mb-0">Informasi</p>
-            <p
-              class="text-sm uppercase tracking-[0.12em] text-[var(--color-muted)]"
-            >
-              Open consultation
-            </p>
-            <a
-              href="https://wa.me/6281234567890?text=Halo%2C%20saya%20ingin%20mendaftar%20seminar%20bahasa%20Jerman."
-              target="_blank"
-              rel="noreferrer"
-              class="inline-flex items-center justify-center border border-[var(--color-red)] bg-[var(--color-red)] px-4 py-3 text-[0.7rem] font-medium uppercase tracking-[0.12em] text-[var(--color-white)] transition-colors hover:border-[var(--color-charcoal)] hover:bg-[var(--color-charcoal)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-gold)]"
-            >
-              Daftar via WhatsApp
-            </a>
-          </div>
+          <SeminarGallery />
         </div>
-        <SeminarGallery />
       </div>
     </section>
+
+    <TeachingGallery />
   </main>
 
   <Footer />

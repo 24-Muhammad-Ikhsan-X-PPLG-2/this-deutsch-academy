@@ -309,15 +309,16 @@ const trackSlideCount = slides.length + 2;
 
 <style>
   .seminar-gallery {
-    margin-top: clamp(2rem, 5vw, 3.5rem);
+    width: 100%;
+    min-width: 0;
   }
 
   .seminar-gallery-heading {
     display: flex;
-    align-items: end;
-    justify-content: space-between;
-    gap: 1.5rem;
-    margin-bottom: 1.25rem;
+    align-items: start;
+    flex-direction: column;
+    gap: 0.65rem;
+    margin-bottom: 1rem;
   }
 
   .seminar-gallery-heading .section-label {
@@ -327,17 +328,16 @@ const trackSlideCount = slides.length + 2;
   .seminar-gallery-heading h3 {
     margin: 0;
     color: var(--color-charcoal);
-    font-size: clamp(1.65rem, 3vw, 2.5rem);
+    font-size: clamp(1.4rem, 2vw, 1.8rem);
     line-height: 1.1;
   }
 
   .seminar-gallery-note {
-    max-width: 18rem;
+    max-width: 100%;
     margin: 0;
     color: var(--color-muted);
     font-size: 0.72rem;
     line-height: 1.5;
-    text-align: right;
   }
 
   .seminar-carousel-frame {
@@ -349,7 +349,7 @@ const trackSlideCount = slides.length + 2;
   .seminar-carousel-viewport {
     overflow: hidden;
     width: 100%;
-    aspect-ratio: 16 / 9;
+    aspect-ratio: 3 / 2;
     background: var(--color-ivory);
     touch-action: pan-y;
     user-select: none;
@@ -487,16 +487,6 @@ const trackSlideCount = slides.length + 2;
   }
 
   @media (max-width: 640px) {
-    .seminar-gallery-heading {
-      align-items: start;
-      flex-direction: column;
-      gap: 0.65rem;
-    }
-
-    .seminar-gallery-note {
-      text-align: left;
-    }
-
     .seminar-carousel-controls {
       gap: 0.5rem;
     }
