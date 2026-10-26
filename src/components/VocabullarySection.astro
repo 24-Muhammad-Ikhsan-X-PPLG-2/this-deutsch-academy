@@ -1,0 +1,48 @@
+---
+const vocabulary = [
+  { german: "Guten Morgen", indonesian: "Selamat pagi" },
+  { german: "Danke", indonesian: "Terima kasih" },
+  { german: "Bitte", indonesian: "Tolong / Silakan" },
+  { german: "Freundschaft", indonesian: "Persahabatan" },
+  { german: "Lernen", indonesian: "Belajar" },
+  { german: "Zusammen", indonesian: "Bersama" },
+  { german: "Wissen", indonesian: "Pengetahuan" },
+  { german: "Willkommen", indonesian: "Selamat datang" },
+  { german: "Sprache", indonesian: "Bahasa" },
+  { german: "Zukunft", indonesian: "Masa depan" },
+  { german: "Hallo", indonesian: "Halo" },
+  { german: "Stadt", indonesian: "Kota" },
+];
+---
+
+<section aria-label="Daftar kosakata Jerman" class="vocabulary-strip">
+  <div
+    class="vocabulary-viewport"
+    aria-label="Vokabular bahasa Jerman bergerak"
+  >
+    <div class="vocabulary-track">
+      <div class="vocabulary-group">
+        {
+          vocabulary.map((item) => (
+            <span class="vocabulary-item">
+              <span class="vocabulary-word">{item.german}</span>
+              <span class="vocabulary-separator">—</span>
+              <span class="vocabulary-translation">{item.indonesian}</span>
+            </span>
+          ))
+        }
+      </div>
+      <div class="vocabulary-group" aria-hidden="true">
+        {
+          vocabulary.map((item) => (
+            <span class="vocabulary-item">
+              <span class="vocabulary-word">{item.german}</span>
+              <span class="vocabulary-separator">—</span>
+              <span class="vocabulary-translation">{item.indonesian}</span>
+            </span>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>

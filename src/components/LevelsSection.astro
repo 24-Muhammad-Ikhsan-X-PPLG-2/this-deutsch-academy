@@ -1,0 +1,82 @@
+---
+const levels = [
+  {
+    code: "A1",
+    title: "Pemula",
+    description:
+      "Membangun fondasi percakapan dasar, kosakata harian, dan rasa percaya diri untuk berkomunikasi sederhana.",
+    href:
+      "https://wa.me/6282211071110?text=" +
+      encodeURIComponent("Halo, saya ingin daftar kelas A1 — Pemula."),
+  },
+  {
+    code: "A2",
+    title: "Dasar",
+    description:
+      "Mengembangkan kemampuan memahami situasi sehari-hari, menjelaskan kegiatan rutin, dan mengekspresikan kebutuhan dengan lebih jelas.",
+    href:
+      "https://wa.me/6282211071110?text=" +
+      encodeURIComponent("Halo, saya ingin daftar kelas A2 — Dasar."),
+  },
+  {
+    code: "B1",
+    title: "Menengah",
+    description:
+      "Memperkuat kemampuan berkomunikasi dalam konteks kerja, studi, dan interaksi sosial yang lebih dinamis.",
+    href:
+      "https://wa.me/6282211071110?text=" +
+      encodeURIComponent("Halo, saya ingin daftar kelas B1 — Menengah."),
+  },
+  {
+    code: "B2",
+    title: "Menengah Atas",
+    description:
+      "Menyempurnakan presentasi, pemahaman tekstual, dan ketepatan ekspresi untuk menghadapi situasi yang lebih kompleks.",
+    href:
+      "https://wa.me/6282211071110?text=" +
+      encodeURIComponent("Halo, saya ingin daftar kelas B2 — Menengah Atas."),
+  },
+];
+---
+
+<section id="levels" class="container py-16 md:py-20">
+  <div class="mb-8 max-w-2xl">
+    <p class="section-label">Level kursus</p>
+    <h2 class="serif-display text-4xl text-[var(--color-charcoal)] md:text-5xl">
+      Jalur belajar yang jelas.
+    </h2>
+  </div>
+
+  <div class="grid gap-4 md:grid-cols-2">
+    {
+      levels.map((level) => (
+        <article class="level-card">
+          <div class="mb-4 flex items-start justify-between gap-3">
+            <div>
+              <p class="section-label mb-2">Level {level.code}</p>
+              <h3 class="serif-display text-3xl text-[var(--color-charcoal)]">
+                {level.title}
+              </h3>
+            </div>
+            <span class="inline-flex h-12 w-12 items-center justify-center border border-[var(--color-gold)] bg-[var(--color-gold)] text-sm font-semibold uppercase tracking-[0.12em] text-[var(--color-charcoal)]">
+              {level.code}
+            </span>
+          </div>
+
+          <p class="mb-6 text-base leading-relaxed text-[var(--color-muted)]">
+            {level.description}
+          </p>
+
+          <a
+            href={level.href}
+            target="_blank"
+            rel="noreferrer"
+            class="inline-flex items-center border-b border-[var(--color-charcoal)] pb-1 text-[0.7rem] font-medium uppercase tracking-[0.12em] text-[var(--color-charcoal)] transition-colors hover:border-[var(--color-red)] hover:text-[var(--color-red)]"
+          >
+            Daftar {level.code}
+          </a>
+        </article>
+      ))
+    }
+  </div>
+</section>

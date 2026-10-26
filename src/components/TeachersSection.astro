@@ -1,0 +1,51 @@
+---
+const teachers = [
+  { initial: "P1", name: "Pengajar Placeholder 1", role: "Kelas A1 & A2" },
+  { initial: "P2", name: "Pengajar Placeholder 2", role: "Kelas B1" },
+  {
+    initial: "P3",
+    name: "Pengajar Placeholder 3",
+    role: "Kelas B2 & Persiapan",
+  },
+];
+---
+
+<section
+  id="teachers"
+  class="border-y border-[var(--color-border)] bg-[var(--color-ivory)]"
+>
+  <div class="container py-16 md:py-20">
+    <div class="mb-8 max-w-2xl">
+      <p class="section-label">Pengajar</p>
+      <h2
+        class="serif-display text-4xl text-[var(--color-charcoal)] md:text-5xl"
+      >
+        Mendampingi perjalanan belajar.
+      </h2>
+    </div>
+
+    <div class="grid gap-5 md:grid-cols-3">
+      {
+        teachers.map((teacher) => (
+          <article class="teacher-card p-5">
+            <div class="mb-5 flex items-center gap-4">
+              <div class="teacher-avatar" aria-hidden="true">
+                {teacher.initial}
+              </div>
+              <div>
+                <p class="section-label mb-1">placeholder</p>
+                <h3 class="text-lg font-semibold text-[var(--color-charcoal)]">
+                  {teacher.name}
+                </h3>
+              </div>
+            </div>
+
+            <p class="text-sm uppercase tracking-[0.12em] text-[var(--color-muted)]">
+              {teacher.role}
+            </p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

@@ -265,54 +265,6 @@ img {
   padding: 1.2rem;
 }
 
-.hero-figure {
-  position: relative;
-  min-height: 420px;
-  border: 1px solid var(--color-border);
-  background:
-    linear-gradient(
-      to bottom,
-      color-mix(in srgb, var(--color-charcoal) 4%, transparent),
-      color-mix(in srgb, var(--color-charcoal) 2%, transparent)
-    ),
-    var(--color-ivory);
-  overflow: hidden;
-}
-
-.hero-figure::before,
-.hero-figure::after {
-  content: "";
-  position: absolute;
-  border: 1px solid var(--color-border);
-}
-
-.hero-figure::before {
-  inset: 2rem 2rem auto auto;
-  width: 42%;
-  height: 56%;
-  background: color-mix(in srgb, var(--color-white) 38%, transparent);
-}
-
-.hero-figure::after {
-  inset: auto auto 2rem 2rem;
-  width: 42%;
-  height: 38%;
-  background: color-mix(in srgb, var(--color-red) 8%, transparent);
-}
-
-.hero-mark {
-  position: absolute;
-  right: 3rem;
-  bottom: 3rem;
-  padding: 1rem 1.2rem;
-  border: 1px solid var(--color-border);
-  background: color-mix(in srgb, var(--color-white) 85%, transparent);
-  font-size: 0.66rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--color-muted);
-}
-
 .vocabulary-strip {
   border-top: 1px solid var(--color-border);
   border-bottom: 1px solid var(--color-border);
@@ -438,9 +390,6 @@ img {
 }
 
 @media (max-width: 768px) {
-  .hero-figure {
-    min-height: 320px;
-  }
   html {
     scroll-padding-top: 10rem;
   }
